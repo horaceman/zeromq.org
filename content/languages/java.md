@@ -67,5 +67,19 @@ public class HelloWorldServer
 ### Example
 
 ```java
-TBD...
+import org.zeromq.czmq.*;
+
+public class HelloWorld
+{
+    public static void main( String[] args )
+    {
+         Zsock push = Zsock.newPush("inproc://example");
+         Zsock pull = Zsock.newPull("inproc://example");
+         Zstr.send(push.self, "Hello, world!");
+         String rcvStr = Zstr.recv(pull.self);
+         System.out.println(rcvStr);
+         pull.close();
+		 push.close();
+    }
+}
 ```
